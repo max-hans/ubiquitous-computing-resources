@@ -1,8 +1,6 @@
 # "Ubiquitous Computing" Course Material
 
-Summer Semester 25, HfG Karlsruhe
-
-Maximilian Hans
+Maximilian Hans, HfG Karlsruhe
 
 Contact: main@i-like-robots.com
 

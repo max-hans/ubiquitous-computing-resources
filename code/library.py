@@ -1,51 +1,40 @@
 from machine import Pin, time_pulse_us, PWM
 from utime import sleep_us, ticks_ms, ticks_diff
+from math import sin, pi
+
+
+def map_range(value, in_min, in_max, out_min, out_max):
+    return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
 
 class Servo:
     _SERVO_PWM_FREQ = 50
     _MIN_U16_DUTY = 1638
     _MAX_U16_DUTY = 7864
-    
+
     def __init__(self, pin, min_angle=0, max_angle=180):
         self.min_angle = min_angle
         self.max_angle = max_angle
-        self.current_angle = -0.001
-        self.__initialise(pin)
-
-    def update_settings(self, servo_pwm_freq, min_u16_duty, max_u16_duty, min_angle, max_angle, pin):
-        self._SERVO_PWM_FREQ = servo_pwm_freq
-        self._MIN_U16_DUTY = min_u16_duty
-        self._MAX_U16_DUTY = max_u16_duty
-        self.min_angle = min_angle
-        self.max_angle = max_angle
-        self.__initialise(pin)
+        self.current_angle = None
+        self._angle_conversion_factor = (self._MAX_U16_DUTY - self._MIN_U16_DUTY) / (max_angle - min_angle)
+        self._motor = PWM(Pin(pin))
+        self._motor.freq(self._SERVO_PWM_FREQ)
 
     def move(self, angle):
         if angle < self.min_angle or angle > self.max_angle:
             raise ValueError(f"Angle must be between {self.min_angle} and {self.max_angle}")
-            
+
         angle = round(angle, 2)
-        
+
         if angle == self.current_angle:
             return
-            
+
         self.current_angle = angle
-        duty_u16 = self.__angle_to_u16_duty(angle)
-        self.__motor.duty_u16(duty_u16)
-
-    def __angle_to_u16_duty(self, angle):
-        return int((angle - self.min_angle) * self.__angle_conversion_factor) + self._MIN_U16_DUTY
-
-    def __initialise(self, pin):
-        self.current_angle = -0.001
-        self.__angle_conversion_factor = (self._MAX_U16_DUTY - self._MIN_U16_DUTY) / (self.max_angle - self.min_angle)
-        self.__motor = PWM(Pin(pin))
-        self.__motor.freq(self._SERVO_PWM_FREQ)
+        duty_u16 = int((angle - self.min_angle) * self._angle_conversion_factor) + self._MIN_U16_DUTY
+        self._motor.duty_u16(duty_u16)
 
 
 class HCSR04:
-    MAX_RANGE_IN_CM = const(500)
-    
     def __init__(self, trigger_pin, echo_pin, echo_timeout_us=30000):
         self.echo_timeout_us = echo_timeout_us
         self.trigger = Pin(trigger_pin, mode=Pin.OUT, pull=None)
@@ -58,31 +47,22 @@ class HCSR04:
         self.trigger.value(1)
         sleep_us(10)
         self.trigger.value(0)
-        
+
         try:
             pulse_time = time_pulse_us(self.echo, 1, self.echo_timeout_us)
-            
             if pulse_time < 0:
                 raise OSError('Out of range')
-                
             return pulse_time
-            
         except OSError as ex:
             if ex.args[0] == 110:
                 raise OSError('Out of range')
             raise ex
 
     def distance_mm(self):
-        pulse_time = self._send_pulse_and_wait()
-        mm = pulse_time * 100 // 582
-        return mm
+        return (self._send_pulse_and_wait() / 2) / 0.0291
 
     def distance_cm(self):
-        pulse_time = self._send_pulse_and_wait()
-        cms = (pulse_time / 2) / 29.1
-        return cms
-
-
+        return self.distance_mm() / 10
 
 
 class Blinky:
@@ -92,7 +72,7 @@ class Blinky:
         else:
             self.pin = pin
             self.pin.init(Pin.OUT)
-            
+
         self.interval = 0
         self.last_update = 0
         self.state = False
@@ -102,12 +82,12 @@ class Blinky:
         self.interval = interval
         self.last_update = ticks_ms()
         self.state = False
-        self.pin.value(self.state)
+        self.pin.value(0)
         self.running = True
 
     def stop(self):
         self.running = False
-        self.pin.value(False)
+        self.pin.value(0)
 
     def change_frequency(self, new_interval):
         self.interval = new_interval
@@ -119,3 +99,32 @@ class Blinky:
                 self.state = not self.state
                 self.pin.value(self.state)
                 self.last_update = current_time
+
+
+class SineGenerator:
+    def __init__(self, period=1000):
+        self.period = period
+        self._running = False
+        self._start_time = 0
+        self._paused_at = 0
+
+    def start(self):
+        self._start_time = ticks_ms()
+        self._running = True
+
+    def pause(self):
+        if self._running:
+            self._paused_at = ticks_diff(ticks_ms(), self._start_time)
+            self._running = False
+
+    def resume(self):
+        if not self._running:
+            self._start_time = ticks_ms() - self._paused_at
+            self._running = True
+
+    def update(self):
+        if not self._running:
+            return None
+        elapsed = ticks_diff(ticks_ms(), self._start_time)
+        t = (elapsed / self.period) * 2 * pi
+        return (sin(t) + 1) / 2  # 0.0 – 1.0

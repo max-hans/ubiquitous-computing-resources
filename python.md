@@ -176,7 +176,7 @@ while count <= 5:
 # 5
 ```
 
-### Example 2: Microcontroller-relevant while loop
+### Example 2: While loop
 
 ```python
 sensor_value = 0
