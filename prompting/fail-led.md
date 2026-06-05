@@ -2,8 +2,6 @@
 
 ## User
 
-you are an expert python developer.
-
 write code in MicroPython that does the following:
 
 - connect an LED at pin 28

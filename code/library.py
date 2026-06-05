@@ -1,6 +1,7 @@
-from machine import Pin, time_pulse_us, PWM
-from utime import sleep_us, ticks_ms, ticks_diff
-from math import sin, pi
+from math import pi, sin
+
+from machine import PWM, Pin, time_pulse_us
+from utime import sleep_us, ticks_diff, ticks_ms
 
 
 def map_range(value, in_min, in_max, out_min, out_max):
@@ -16,13 +17,17 @@ class Servo:
         self.min_angle = min_angle
         self.max_angle = max_angle
         self.current_angle = None
-        self._angle_conversion_factor = (self._MAX_U16_DUTY - self._MIN_U16_DUTY) / (max_angle - min_angle)
+        self._angle_conversion_factor = (self._MAX_U16_DUTY - self._MIN_U16_DUTY) / (
+            max_angle - min_angle
+        )
         self._motor = PWM(Pin(pin))
         self._motor.freq(self._SERVO_PWM_FREQ)
 
     def move(self, angle):
         if angle < self.min_angle or angle > self.max_angle:
-            raise ValueError(f"Angle must be between {self.min_angle} and {self.max_angle}")
+            raise ValueError(
+                f"Angle must be between {self.min_angle} and {self.max_angle}"
+            )
 
         angle = round(angle, 2)
 
@@ -30,7 +35,10 @@ class Servo:
             return
 
         self.current_angle = angle
-        duty_u16 = int((angle - self.min_angle) * self._angle_conversion_factor) + self._MIN_U16_DUTY
+        duty_u16 = (
+            int((angle - self.min_angle) * self._angle_conversion_factor)
+            + self._MIN_U16_DUTY
+        )
         self._motor.duty_u16(duty_u16)
 
 
@@ -51,11 +59,11 @@ class HCSR04:
         try:
             pulse_time = time_pulse_us(self.echo, 1, self.echo_timeout_us)
             if pulse_time < 0:
-                raise OSError('Out of range')
+                raise OSError("Out of range")
             return pulse_time
         except OSError as ex:
             if ex.args[0] == 110:
-                raise OSError('Out of range')
+                raise OSError("Out of range")
             raise ex
 
     def distance_mm(self):

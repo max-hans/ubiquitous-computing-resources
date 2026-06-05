@@ -2,8 +2,6 @@
 
 ## User
 
-you are an expert python developer.
-
 write code in MicroPython for the pi pico that does the following:
 
 attach a servo at pin 28

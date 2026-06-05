@@ -35,55 +35,27 @@ You can find a list of examples and descriptions on how Python code actually wor
 
 ## Code Examples
 
-Code examples can be found in the ["code"](/code) directory.
+Code examples can be found in the [`code/`](/code) directory, organised in four blocks.
 
-### basics.py
+### Block 1 – Python Basics [`code/01_basics`](/code/01_basics)
 
-This code teaches the basics of Python programming including variables, if-statements and loops. Try this first!
+Pure Python, no microcontroller needed. Covers variables, conditions, loops and signals. Run directly on your computer.
 
-### servo.py
+### Block 2 – Outputs [`code/02_outputs`](/code/02_outputs)
 
-This code demonstrates how to control an SG90 servo motor using a Raspberry Pi Pico. It utilizes the Servo library to simplify the servo control process. The code continuously rotates the servo between 0° and 90° positions with a short delay in between, providing a basic example of servo motor control.
+Controlling LEDs and servo motors on the Pico.
 
-#### Things to Try/Modify:
+### Block 3 – Sensors [`code/03_sensors`](/code/03_sensors)
 
-- Adjust the servo rotation angles
-- Change the delay between servo rotations
-- Add more servo positions
+Reading inputs: light sensor, push button, gesture sensor. Includes examples that combine sensors with outputs.
 
-### servo-fade.py
+### Block 4 – Templates [`code/04_templates`](/code/04_templates)
 
-This code demonstrates how to control an SG90 servo motor using a Raspberry Pi Pico and the Servo library. The code continuously rotates the servo between 0° and 90° positions in steps of 5°, creating a fading effect.
-
-#### Things to Try/Modify:
-
-- Adjust the servo rotation angles
-- Change the delay between servo rotations
-- Add more servo positions
-
-### sensor.py
-
-This code reads an analog sensor value and prints it to the command line every 0.3 seconds. It sets up an analog input pin, reads the sensor value as a 16-bit unsigned integer, and displays it. This allows monitoring the sensor's output and can be adapted for various sensors and projects.
-
-#### Things to Try/Modify:
-
-- Change the analog input pin
-- Adjust the delay between sensor readings
-- Modify the output format
-
-### ultra-sound.py
-
-This code demonstrates how to use an ultrasonic distance sensor (HC-SR04) with a microcontroller board (like a Raspberry Pi Pico). It continuously measures the distance between the sensor and the nearest object in front of it. The measured distance is displayed in centimeters (cm) every 0.3 seconds.
-
-#### Things to Try/Modify:
-
-- Adjust the trigger and echo pin assignments
-- Change the delay between distance measurements
-- Modify the distance calculation formula
+Ready-to-run starting points for prototypes. Tweak the parameters at the top of each file to shape the behaviour.
 
 ### library.py
 
-Contains important code resources. Do not touch!
+Shared code used by Blocks 2–4. Copy it to the Pico alongside whichever example you are running. Do not modify.
 
 ## Wiring
 

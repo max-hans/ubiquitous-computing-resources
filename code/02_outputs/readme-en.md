@@ -10,10 +10,10 @@ First steps with the Pico — controlling LEDs and servos.
 
 ## Examples
 
-| File | Topic |
-|---|---|
-| `01_led.py` | Blink the onboard LED |
-| `02_blink.py` | LED with non-blocking Blinky object |
-| `03_servo.py` | Toggle servo between 0° and 90° |
-| `04_servo-fade.py` | Smoothly sweep servo from 0° to 90° |
-| `05_multi-servo.py` | Control two servos simultaneously |
+| File                | Topic                               |
+| ------------------- | ----------------------------------- |
+| `01_led.py`         | Blink the onboard LED               |
+| `02_blink.py`       | LED with non-blocking Blinky object |
+| `03_servo.py`       | Toggle servo between 0° and 90°     |
+| `04_servo-fade.py`  | Smoothly sweep servo from 0° to 90° |
+| `05_multi-servo.py` | Control two servos simultaneously   |

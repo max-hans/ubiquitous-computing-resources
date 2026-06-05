@@ -12,9 +12,9 @@ Reading sensors and connecting them to outputs.
 
 ## Examples
 
-| File | Topic |
-|---|---|
-| `01_light-sensor.py` | Read light sensor (ADC) |
-| `02_button.py` | Read button and print value |
-| `03_button-led.py` | Button pressed → LED on |
-| `04_light-servo.py` | Light value controls servo angle |
+| File                 | Topic                            |
+| -------------------- | -------------------------------- |
+| `01_light-sensor.py` | Read light sensor (ADC)          |
+| `02_button.py`       | Read button and print value      |
+| `03_button-led.py`   | Button pressed → LED on          |
+| `04_light-servo.py`  | Light value controls servo angle |

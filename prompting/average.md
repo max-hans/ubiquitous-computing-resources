@@ -2,7 +2,6 @@
 
 ## User
 
-you are an expert python developer.
 write code in MicroPython
 
 i have a sensor attached to my pi pico, the analog read values are quite jittery. write code that filters this noise
