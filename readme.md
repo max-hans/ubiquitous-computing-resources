@@ -8,9 +8,7 @@ Contact: main@i-like-robots.com
 
 ## Resources
 
-- <a href="https://raw.githubusercontent.com/max-hans/25-hfg-karlsruhe-arduino/refs/heads/main/resources/1-intro.pdf" class="image fit">01-intro</a>
-- <a href="https://raw.githubusercontent.com/max-hans/25-hfg-karlsruhe-arduino/refs/heads/main/resources/2-inspiration.pdf" class="image fit">02-inspiration</a>
-- <a href="https://github.com/max-hans/25-hfg-karlsruhe-arduino/archive/refs/heads/main.zip">Download all files</a>
+- [Download all files](https://github.com/max-hans/ubiquitous-computing-resources/archive/refs/heads/main.zip)
 - [MicroPython Reference](https://docs.micropython.org/en/latest/rp2/quickref.html)
 
 ## Introduction
@@ -83,38 +81,15 @@ Shared code used by Blocks 2–4. Copy it to the Pico alongside whichever exampl
 
 ![](resources/sensor.png)
 
-## Prompting
+## Using AI
 
-When using ChatGPT or other GenAi to work on your code, integrate the following in your prompt:
-
-```
-<context>
-we are using microphyton on a pi pico. make the code as simple as possible.
-dont use any fancy python functionality. dont use defs/functions, consts, type annotations, records or array.
-dont rewrite the code from ground up.
-use only the libraries: "time" and "machine".
-the code should be verbose without making things too complex. dont add extraneous comments. the code should explain itself.
-if something is unclear (pins, timeframes etc) – ask before creating the code.
-
-The pi pico has 28 GPIO pins going from GP0 to GP28. GP23-GP25 are NOT available.
-GP26, GP27 and GP28 can also be used as ADC.
-</context>
-```
+You can use AI for your free work. Either copy the system prompt from [here](prompting/system-prompt.md) or use the [Gemini Gem](https://gemini.google.com/gem/1tQuCdHKf2PpdJEWrHFLv_pLEOZo6zHIc?usp=sharing) I created for you to use.
 
 ### Example prompt
 
 ---
 
-```
-<context>
-we are using microphyton on a pi pico. make the code as simple as possible.
-dont use any fancy python functionality. dont use defs/functions, consts, type annotations, records or array.
-dont rewrite the code from ground up.
-use only the libraries: "time" and "machine".
-the code should be verbose without making things too complex. dont add extraneous comments. the code should explain itself.
-if something is unclear (pins, timeframes etc) – ask before creating the code.
-</context>
-```
+<<< enter the system prompt here or omit when using the Gemini Gem >>>
 
 add a second led, if the value is 1 the first one should light up, if not the second led should light up.
 
@@ -138,5 +113,3 @@ while True:
     sleep(0.1)
 
 ```
-
----
