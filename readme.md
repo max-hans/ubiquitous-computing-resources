@@ -113,3 +113,18 @@ while True:
     sleep(0.1)
 
 ```
+
+## Shops
+
+You can buy electronics components from various sources. Amazon has a pretty broad offering, however products sold there usually lack documentation
+and examples.
+
+The shops below usually provide better guidance on what to buy and usually are more approachable.
+
+[https://www.berrybase.de/](berrybase.de)
+
+[https://www.az-delivery.de](az-delivery.de)
+
+[https://www.roboter-bausatz.de](roboter-bausatz.de)
+
+[https://www.conrad.de](conrad.de)
